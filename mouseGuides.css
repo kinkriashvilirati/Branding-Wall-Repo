@@ -1,0 +1,27 @@
+/* Mouse-following development guides. */
+.mouse-guide {
+  position: absolute;
+  z-index: 1100;
+  display: none;
+  background: rgba(255, 52, 52, 0.9);
+  box-shadow: 0 0 2px rgba(255, 255, 255, 0.9);
+  pointer-events: none;
+}
+
+.container.show-guides.pointer-active .mouse-guide {
+  display: block;
+}
+
+.mouse-guide-horizontal {
+  right: 0;
+  left: 0;
+  top: var(--mouse-y, 50%);
+  height: 1px;
+}
+
+.mouse-guide-vertical {
+  top: 0;
+  bottom: 0;
+  left: var(--mouse-x, 50%);
+  width: 1px;
+}
