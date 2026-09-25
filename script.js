@@ -28,3 +28,15 @@ stage.addEventListener('pointermove', (event) => {
 stage.addEventListener('pointerleave', () => {
   coordinates.value = 'x: —, y: —';
 });
+
+function playCardIntro() {
+  const cardIntro = document.querySelector('#card-intro');
+  if (!cardIntro) return;
+
+  // Removing and restoring the class also lets the full demo replay this later.
+  cardIntro.classList.remove('is-playing');
+  void cardIntro.offsetWidth;
+  cardIntro.classList.add('is-playing');
+}
+
+playCardIntro();

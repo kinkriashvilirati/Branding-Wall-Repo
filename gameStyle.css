@@ -1,0 +1,67 @@
+.card-intro {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.intro-card {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  width: 19%;
+  height: auto;
+  opacity: 0;
+  transform-origin: 50% 85%;
+  user-select: none;
+}
+
+/* These offsets are relative to one card's width/height. */
+.intro-card-left {
+  --fan-x: -78%;
+  --fan-y: 5%;
+  --fan-angle: -12deg;
+  --shuffle-x: 36%;
+  z-index: 1;
+}
+
+.intro-card-center {
+  --fan-x: 0%;
+  --fan-y: -4%;
+  --fan-angle: 0deg;
+  --shuffle-x: -26%;
+  z-index: 3;
+}
+
+.intro-card-right {
+  --fan-x: 78%;
+  --fan-y: 5%;
+  --fan-angle: 12deg;
+  --shuffle-x: -36%;
+  z-index: 2;
+}
+
+.card-intro.is-playing .intro-card {
+  animation: card-intro 1.6s ease-in-out forwards;
+}
+
+@keyframes card-intro {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 15%) scale(0.85);
+  }
+  25% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  45% {
+    transform: translate(calc(-50% + var(--shuffle-x)), -55%) rotate(5deg);
+  }
+  62% {
+    transform: translate(calc(-50% - var(--shuffle-x)), -48%) rotate(-5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--fan-x)), calc(-50% + var(--fan-y))) rotate(var(--fan-angle));
+  }
+}
