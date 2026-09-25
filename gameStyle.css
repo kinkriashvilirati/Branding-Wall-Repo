@@ -3,9 +3,15 @@
   --hand-wait: 0.3s;
   --hand-duration: 1.05s;
   --tap-offset: 0.68s;
+  --auto-reaction-wait: 1s;
+  --reaction-duration: 0.32s;
+  --board-center-travel: -36cqh; /* Board center 44% minus card row 80%. */
+  --reaction-scale: 1.06;
+  --reaction-dim: 0.62;
   position: absolute;
   inset: 0;
   z-index: 2;
+  container-type: size;
   pointer-events: none;
 }
 
@@ -15,9 +21,18 @@
   left: 50%;
   width: 19%;
   aspect-ratio: 315 / 475;
+  border: 0;
+  padding: 0;
+  background: none;
   opacity: 0;
   transform-origin: 50% 85%;
   user-select: none;
+}
+
+.card-intro.is-selectable .intro-card-center {
+  pointer-events: auto;
+  cursor: pointer;
+  touch-action: manipulation;
 }
 
 .intro-card-inner {
@@ -47,6 +62,7 @@
   --fan-y: 5%;
   --fan-angle: -12deg;
   --shuffle-x: 36%;
+  --reaction-shift: -12%;
   z-index: 1;
 }
 
@@ -63,6 +79,7 @@
   --fan-y: 5%;
   --fan-angle: 12deg;
   --shuffle-x: -36%;
+  --reaction-shift: 12%;
   z-index: 2;
 }
 
@@ -95,6 +112,28 @@
 .card-intro.is-playing .intro-card-center .intro-card-front {
   animation: middle-card-tap 0.34s ease-out both;
   animation-delay: calc(var(--intro-duration) + var(--hand-wait) + var(--tap-offset));
+}
+
+.card-intro.is-awaiting-choice .intro-card-center .intro-card-front {
+  animation: middle-card-tap 0.9s ease-in-out infinite;
+}
+
+.card-intro.is-reacted .intro-card-center {
+  animation: card-to-board var(--reaction-duration) ease-out forwards;
+}
+
+.card-intro.is-reacted .intro-card-left,
+.card-intro.is-reacted .intro-card-right {
+  animation: card-set-aside var(--reaction-duration) ease-out forwards;
+}
+
+.card-intro.is-reacted .intro-card-center .intro-card-front {
+  animation: none;
+}
+
+.card-intro.is-selected .intro-hand {
+  animation: none;
+  opacity: 0;
 }
 
 @keyframes card-intro {
@@ -161,5 +200,27 @@
   }
   50% {
     transform: translateY(-4%) scale(1.05);
+  }
+}
+
+@keyframes card-to-board {
+  from {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--fan-x)), calc(-50% + var(--fan-y))) rotate(var(--fan-angle));
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, calc(-50% + var(--board-center-travel))) rotate(0deg) scale(var(--reaction-scale));
+  }
+}
+
+@keyframes card-set-aside {
+  from {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--fan-x)), calc(-50% + var(--fan-y))) rotate(var(--fan-angle));
+  }
+  to {
+    opacity: var(--reaction-dim);
+    transform: translate(calc(-50% + var(--fan-x) + var(--reaction-shift)), calc(-50% + var(--fan-y))) rotate(var(--fan-angle));
   }
 }

@@ -29,14 +29,50 @@ stage.addEventListener('pointerleave', () => {
   coordinates.value = 'x: —, y: —';
 });
 
+const cardIntro = document.querySelector('#card-intro');
+const middleCard = cardIntro?.querySelector('.intro-card-center');
+const middleCardInner = middleCard?.querySelector('.intro-card-inner');
+const introHand = cardIntro?.querySelector('.intro-hand');
+let autoReactionTimer;
+
 function playCardIntro() {
-  const cardIntro = document.querySelector('#card-intro');
   if (!cardIntro) return;
 
   // Removing and restoring the class also lets the full demo replay this later.
-  cardIntro.classList.remove('is-playing');
+  clearTimeout(autoReactionTimer);
+  cardIntro.classList.remove('is-playing', 'is-selectable', 'is-awaiting-choice', 'is-selected', 'is-reacted');
+  middleCard.tabIndex = -1;
   void cardIntro.offsetWidth;
   cardIntro.classList.add('is-playing');
 }
+
+function reactToCard(source) {
+  if (!cardIntro?.classList.contains('is-selectable') || cardIntro.classList.contains('is-reacted')) return;
+
+  clearTimeout(autoReactionTimer);
+  cardIntro.classList.remove('is-awaiting-choice', 'is-selectable');
+  cardIntro.classList.add('is-reacted');
+  if (source === 'user') cardIntro.classList.add('is-selected');
+  middleCard.tabIndex = -1;
+  middleCard.blur();
+}
+
+middleCardInner?.addEventListener('animationend', (event) => {
+  if (event.animationName !== 'card-reveal') return;
+  cardIntro.classList.add('is-selectable');
+  middleCard.tabIndex = 0;
+});
+
+introHand?.addEventListener('animationend', (event) => {
+  if (event.animationName !== 'hand-tap' || cardIntro.classList.contains('is-reacted')) return;
+  cardIntro.classList.add('is-awaiting-choice');
+
+  const waitSeconds = parseFloat(getComputedStyle(cardIntro).getPropertyValue('--auto-reaction-wait'));
+  autoReactionTimer = setTimeout(() => reactToCard('auto'), waitSeconds * 1000);
+});
+
+middleCard?.addEventListener('click', () => {
+  reactToCard('user');
+});
 
 playCardIntro();
