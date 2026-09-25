@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Game Animation Stage</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./gameStyle.css" />
+  </head>
+  <body>
+    <main class="workspace">
+      <div class="stage-toolbar">
+        <button id="toggle-guides" type="button" aria-pressed="true">
+          Hide guides (G)
+        </button>
+        <output id="coordinates">x: 0, y: 0</output>
+      </div>
+
+      <!-- Position every animated image inside this container. -->
+      <div class="container show-guides" id="stage">
+        <img
+          class="stage-background"
+          src="./assets/backgrounds/bg.svg"
+          alt=""
+          draggable="false"
+        />
+
+        <!-- Example layer. Duplicate this and change src/top/left/width. -->
+        <img
+          class="layer board"
+          src="./assets/board/board.png"
+          alt="Game board"
+          draggable="false"
+        />
+
+        <div class="stage-grid" aria-hidden="true"></div>
+        <div class="guide guide-x" aria-hidden="true"></div>
+        <div class="guide guide-y" aria-hidden="true"></div>
+      </div>
+    </main>
+    <script src="./script.js"></script>
+  </body>
+</html>
