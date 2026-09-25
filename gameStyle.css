@@ -1,4 +1,8 @@
 .card-intro {
+  --intro-duration: 1.6s;
+  --hand-wait: 0.3s;
+  --hand-duration: 1.05s;
+  --tap-offset: 0.68s;
   position: absolute;
   inset: 0;
   z-index: 2;
@@ -63,11 +67,34 @@
 }
 
 .card-intro.is-playing .intro-card {
-  animation: card-intro 1.6s ease-in-out forwards;
+  animation: card-intro var(--intro-duration) ease-in-out forwards;
 }
 
 .card-intro.is-playing .intro-card-inner {
-  animation: card-reveal 1.6s linear forwards;
+  animation: card-reveal var(--intro-duration) linear forwards;
+}
+
+.intro-hand {
+  /* Adjust these values to place the fingertip over the middle card. */
+  position: absolute;
+  z-index: 4;
+  top: 76%;
+  left: 43.5%;
+  width: 26%;
+  height: auto;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.card-intro.is-playing .intro-hand {
+  animation: hand-tap var(--hand-duration) ease-in-out both;
+  animation-delay: calc(var(--intro-duration) + var(--hand-wait));
+}
+
+.card-intro.is-playing .intro-card-center .intro-card-front {
+  animation: middle-card-tap 0.34s ease-out both;
+  animation-delay: calc(var(--intro-duration) + var(--hand-wait) + var(--tap-offset));
 }
 
 @keyframes card-intro {
@@ -98,5 +125,41 @@
   }
   100% {
     transform: rotateY(0deg);
+  }
+}
+
+@keyframes hand-tap {
+  0% {
+    opacity: 0;
+    transform: translate(28%, 35%);
+  }
+  18% {
+    opacity: 1;
+    transform: translate(28%, 35%);
+  }
+  55% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  68% {
+    opacity: 1;
+    transform: translate(-5%, -6%) scale(0.96);
+  }
+  78% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(15%, 20%);
+  }
+}
+
+@keyframes middle-card-tap {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-4%) scale(1.05);
   }
 }

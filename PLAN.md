@@ -1,37 +1,46 @@
 Board appears
-      ↓
-Cards appear / small shuffle
-      ↓
-Finger appears
-      ↓
-Finger taps one card
-      ↓
-Card moves/reveals
-      ↓
+↓
+Cards appear + quick shuffle
+↓
+Cards flip
+↓
+Finger points to one card
+
+USER CAN TAP HERE
+
+If user taps:
+→ cancel finger auto-tap
+→ use that tap as the tutorial card selection
+
+If user does nothing for ~0.8–1 sec:
+→ finger auto-taps the card
+
+↓
+Card reacts
+↓
 Marble moves a few spaces
-      ↓
-"YOUR TURN"
-      ↓
-TRY IT YOURSELF
-
-3-5 sec totall - we do not need big long animations so that user attention will lost
-
-after animation we have need user to start game
+↓
 
 TRY IT YOURSELF
-      ↓
-User selects/taps card
-      ↓
-Card animation
-      ↓
+↓
+Reset/prepare playable cards
+↓
+User selects card - here user can come if user interacted with animation
+↓
+Card reacts
+↓
 Marble moves
-      ↓
+↓
 Next card
-      ↓
+↓
+User selects again
+↓
+Marble moves
+↓
 2–3 interactions total
-      ↓
-Marble reaches finish
-      ↓
-WIN! -User wins always
-      ↓
-Brand / CTA
+↓
+Finish
+↓
+WIN!
+↓
+Brand / final CTA
